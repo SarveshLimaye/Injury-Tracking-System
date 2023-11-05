@@ -25,6 +25,7 @@ const typeDefs = `#graphql
     user (id : ID!) : User
     users : [User]
     countUsersWithEmail(email: String!): Int
+    userMailtoId(email: String!): ID
   } 
 
   type Mutation {
@@ -54,6 +55,14 @@ const resolvers = {
         },
       });
       return count;
+    },
+    userMailtoId: async (parent, args, context) => {
+      const user = await context.prisma.user.findUnique({
+        where: {
+          email: args.email,
+        },
+      });
+      return user.id;
     },
   },
   User: {
