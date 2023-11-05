@@ -11,3 +11,15 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const ADD_REPORT = gql`
+  mutation AddReport($content: String!, $bodyPart: String!, $userId: ID!) {
+    addReport(content: $content, bodyPart: $bodyPart, userId: $userId) {
+      id
+      content
+      bodyPart
+      createdAt
+      userId
+    }
+  }
+`;

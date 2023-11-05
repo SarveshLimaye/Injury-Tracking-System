@@ -5,3 +5,9 @@ export const countUsersWithEmail = gql`
     countUsersWithEmail(email: $email)
   }
 `;
+
+export const userMailtoId = gql`
+  query userMailtoId($email: String!) {
+    userMailtoId(email: $email)
+  }
+`;

@@ -1,7 +1,12 @@
 import React, { useCallback, useMemo, useState } from "react";
+import { useToast } from "@chakra-ui/react";
 import { getBodyPart } from "./bodyParts";
 import style from "./BodyMap.module.css";
 import { Center, Button, Box } from "@chakra-ui/react";
+import { useMutation, useQuery } from "@apollo/client";
+import { ADD_REPORT } from "../../../../graphql/mutation";
+import { userMailtoId } from "../../../../graphql/queries";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const BodyContainer = ({ children }) => (
   <div
@@ -62,34 +67,32 @@ const BodyPart = ({
   const textPosition = calculateTextPosition();
 
   return (
-    <>
-      <g>
-        <path
-          d={d}
-          id={id}
-          onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{
-            WebkitTapHighlightColor: "transparent",
-            cursor: "pointer",
-            fill,
-          }}
-        />
+    <g>
+      <path
+        d={d}
+        id={id}
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          WebkitTapHighlightColor: "transparent",
+          cursor: "pointer",
+          fill,
+        }}
+      />
 
-        {selectedParts.includes(id) ? (
-          <text
-            x={textPosition.x}
-            y={textPosition.y}
-            fontFamily="Arial"
-            fontSize="24"
-            fill="white"
-          >
-            {selectedParts.indexOf(id) + 1}
-          </text>
-        ) : null}
-      </g>
-    </>
+      {selectedParts.includes(id) ? (
+        <text
+          x={textPosition.x}
+          y={textPosition.y}
+          fontFamily="Arial"
+          fontSize="24"
+          fill="white"
+        >
+          {selectedParts.indexOf(id) + 1}
+        </text>
+      ) : null}
+    </g>
   );
 };
 
@@ -97,10 +100,18 @@ const BodyMap = () => {
   const [lang, setLang] = useState("en");
   const [selectedParts, setSelectedParts] = useState([]);
   const [hovered, setHovered] = useState(null);
-  const [clicked, setClicked] = useState(null);
+  const toast = useToast();
   const [partNumbers, setPartNumbers] = useState({});
   const [selectedCount, setSelectedCount] = useState(0);
   const [injuryDetails, setInjuryDetails] = useState({});
+  const { user } = useUser();
+  const { data, loading } = useQuery(userMailtoId, {
+    variables: {
+      email: user?.email,
+    },
+    skip: !user,
+  });
+  const [addReport, { error }] = useMutation(ADD_REPORT);
 
   const getSelectedCount = useCallback(() => {
     return Object.keys(selectedParts).length;
@@ -188,6 +199,33 @@ const BodyMap = () => {
     setHovered(null);
   };
 
+  const submitReport = (part) => {
+    const report = {
+      content: injuryDetails[part],
+      bodyPart: part,
+      userId: data?.userMailtoId,
+    };
+    addReport({ variables: report });
+    toast({
+      title: "Report submitted.",
+      description: "Your report has been submitted.",
+      position: "top-right",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Your report has not been submitted.",
+        position: "top-right",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+
   console.log(injuryDetails);
 
   return (
@@ -197,6 +235,7 @@ const BodyMap = () => {
       </div>
       <div className={style.bodies}>
         <div>
+          <p>{txt[lang][1]}</p>
           <BodyContainer>
             {antBodyParts.map((bodyPart, index) => (
               <BodyPart
@@ -236,7 +275,7 @@ const BodyMap = () => {
       </div>
       <Center mb="6">
         {selectedParts.length === 0 ? (
-          <h3> smsm </h3>
+          <h3> Click on the body </h3>
         ) : (
           <div className={style.injuryDetails}>
             {selectedParts.map((id) => {
@@ -255,7 +294,11 @@ const BodyMap = () => {
                         handleInjuryDetailsChange(part.name, e.target.value);
                       }}
                     />
-                    <Button mb={7} ml={3}>
+                    <Button
+                      mb={7}
+                      ml={3}
+                      onClick={() => submitReport(part?.name)}
+                    >
                       Submit
                     </Button>
                   </Box>
