@@ -24,6 +24,7 @@ const typeDefs = `#graphql
   type Query {
     user (id : ID!) : User
     users : [User]
+    countUsersWithEmail(email: String!): Int
   } 
 
   type Mutation {
@@ -45,6 +46,14 @@ const resolvers = {
           id: args.id,
         },
       });
+    },
+    countUsersWithEmail: async (parent, args, context) => {
+      const count = await context.prisma.user.count({
+        where: {
+          email: args.email,
+        },
+      });
+      return count;
     },
   },
   User: {
