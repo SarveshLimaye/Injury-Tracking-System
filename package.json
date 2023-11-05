@@ -9,13 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.7",
     "@apollo/server": "^4.9.5",
     "@as-integrations/next": "^2.0.2",
+    "@auth0/nextjs-auth0": "^3.2.0",
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/next-js": "^2.1.5",
+    "@chakra-ui/react": "^2.8.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@prisma/client": "^5.5.2",
+    "avataaars": "^2.0.0",
+    "framer-motion": "^10.16.4",
     "graphql": "^16.8.1",
-    "next": "14.0.1",
-    "react": "^18",
-    "react-dom": "^18"
+    "next": "^14.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0"
   },
   "devDependencies": {
     "@types/react": "18.2.34",
