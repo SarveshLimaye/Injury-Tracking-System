@@ -6,7 +6,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ADD_USER } from "../../graphql/mutation";
 import { countUsersWithEmail } from "../../graphql/queries";
 
-import NavBar from "./components/NavBar/Navbar";
+import NavBar from "../components/NavBar/NavBar";
 
 export default function Home() {
   const { user, isLoading } = useUser();

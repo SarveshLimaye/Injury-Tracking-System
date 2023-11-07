@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
-import { DELETE_REPORT } from "../../../../graphql/mutation";
+import { DELETE_REPORT } from "../../../graphql/mutation";
 import EditModal from "../EditModal/EditModal";
 
 export default function ReportCard({

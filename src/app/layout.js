@@ -1,8 +1,8 @@
 "use client";
 
-import Providers from "./components/Providers/Providers";
+import Providers from "../components/Providers/Providers";
 
-import NavBar from "./components/NavBar/NavBar";
+import NavBar from "../components/NavBar/NavBar";
 
 import "./globals.css";
 

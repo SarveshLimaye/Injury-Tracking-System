@@ -4,8 +4,8 @@ import { getBodyPart } from "./bodyParts";
 import style from "./BodyMap.module.css";
 import { Center, Button, Box } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_REPORT } from "../../../../graphql/mutation";
-import { userMailtoId } from "../../../../graphql/queries";
+import { ADD_REPORT } from "../../../graphql/mutation";
+import { userMailtoId } from "../../../graphql/queries";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 const BodyContainer = ({ children }) => (

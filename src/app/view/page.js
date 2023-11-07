@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { userMailtoId, User } from "../../../graphql/queries";
-import Loading from "../components/Loading/Loading";
+import Loading from "../../components/Loading/Loading";
 
-import ReportCard from "../components/ReportCard/ReportCard";
+import ReportCard from "../../components/ReportCard/ReportCard";
 import {
   Box,
   Button,
@@ -16,7 +16,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import NoReports from "../components/NoReports/NoReports";
+import NoReports from "../../components/NoReports/NoReports";
 
 export default function View() {
   const { user } = useUser();
