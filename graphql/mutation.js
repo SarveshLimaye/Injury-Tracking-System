@@ -23,3 +23,15 @@ export const ADD_REPORT = gql`
     }
   }
 `;
+
+export const DELETE_REPORT = gql`
+  mutation DeleteReport($id: ID!) {
+    deleteReport(id: $id) {
+      id
+      content
+      bodyPart
+      createdAt
+      userId
+    }
+  }
+`;
