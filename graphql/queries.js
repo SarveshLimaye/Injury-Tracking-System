@@ -11,3 +11,21 @@ export const userMailtoId = gql`
     userMailtoId(email: $email)
   }
 `;
+
+export const User = gql`
+  query user($id: ID!) {
+    user(id: $id) {
+      id
+      name
+      email
+      createdAt
+      reports {
+        id
+        content
+        bodyPart
+        createdAt
+        userId
+      }
+    }
+  }
+`;
