@@ -35,3 +35,13 @@ export const DELETE_REPORT = gql`
     }
   }
 `;
+
+export const UPDATE_REPORT = gql`
+  mutation UpdateReport($id: ID!, $content: String!, $bodyPart: String!) {
+    updateReport(id: $id, content: $content, bodyPart: $bodyPart) {
+      id
+      content
+      bodyPart
+    }
+  }
+`;

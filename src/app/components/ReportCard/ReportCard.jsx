@@ -18,6 +18,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import { DELETE_REPORT } from "../../../../graphql/mutation";
+import EditModal from "../EditModal/EditModal";
 
 export default function ReportCard({
   content,
@@ -27,7 +28,8 @@ export default function ReportCard({
   reportId,
 }) {
   let s = new Date(+createdAt);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const viewmodal = useDisclosure();
+  const editmodal = useDisclosure();
   const [deleteReport] = useMutation(DELETE_REPORT);
   const toast = useToast();
   const router = useRouter();
@@ -45,8 +47,6 @@ export default function ReportCard({
         duration: 4000,
         isClosable: true,
       });
-
-      onClose();
     }
   };
 
@@ -55,13 +55,23 @@ export default function ReportCard({
       <Flex justify="space-between" align="center">
         <Heading size="md">Report {index + 1}</Heading>
         <Flex>
-          <Button size="sm" colorScheme="blue" mr={2}>
+          <Button
+            size="sm"
+            colorScheme="blue"
+            mr={2}
+            onClick={editmodal.onOpen}
+          >
             Edit
           </Button>
           <Button size="sm" colorScheme="red" onClick={handleDelete}>
             Delete
           </Button>
-          <Button size="sm" colorScheme="teal" ml={2} onClick={onOpen}>
+          <Button
+            size="sm"
+            colorScheme="teal"
+            ml={2}
+            onClick={viewmodal.onOpen}
+          >
             View
           </Button>
         </Flex>
@@ -78,15 +88,21 @@ export default function ReportCard({
       <Text mt={2}>
         <strong>Time:</strong> {s.toLocaleTimeString()}
       </Text>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <EditModal
+        isOpen={editmodal.isOpen}
+        onClose={editmodal.onClose}
+        initialContent={content}
+        bodyPart={bodyPart}
+        reportId={reportId}
+      />
+      <Modal isOpen={viewmodal.isOpen} onClose={viewmodal.onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Full Report</ModalHeader>
+          <ModalHeader>Full Report {bodyPart}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>{content}</ModalBody>
           <ModalFooter>
-            <Button colorScheme="teal" onClick={onClose}>
+            <Button colorScheme="teal" onClick={viewmodal.onClose}>
               Close
             </Button>
           </ModalFooter>
