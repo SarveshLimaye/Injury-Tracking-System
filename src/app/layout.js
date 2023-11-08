@@ -1,7 +1,7 @@
 "use client";
-
+import { ColorModeScript } from "@chakra-ui/react";
 import Providers from "../components/Providers/Providers";
-
+import theme from "../utils/theme";
 import NavBar from "../components/NavBar/NavBar";
 
 import "./globals.css";
@@ -15,6 +15,7 @@ export default function RootLayout({ children }) {
       */}
       <head />
       <body>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Providers>
           <NavBar />
           {children}

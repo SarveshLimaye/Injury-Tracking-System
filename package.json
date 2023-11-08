@@ -1,7 +1,6 @@
 {
   "name": "injury-tracking-system",
   "version": "0.1.0",
-  
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
-
   },
   "dependencies": {
     "@apollo/client": "^3.8.7",
@@ -17,7 +15,6 @@
     "@as-integrations/next": "^2.0.2",
     "@auth0/nextjs-auth0": "^3.2.0",
     "@chakra-ui/icons": "^2.1.1",
-    
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
@@ -38,5 +35,9 @@
     "@types/react": "18.2.34",
     "prisma": "^5.5.2",
     "typescript": "5.2.2"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/SarveshLimaye/Injury-Tracking-System.git",
+  "author": "SarveshLimaye <sarveshlimaye2002@gmail.com>",
+  "license": "MIT"
 }
