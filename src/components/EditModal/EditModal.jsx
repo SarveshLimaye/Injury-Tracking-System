@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getBodyPart } from "../BodyMap/bodyParts";
 import { useMutation } from "@apollo/client";
-import { UPDATE_REPORT } from "../../../../graphql/mutation";
+import { UPDATE_REPORT } from "../../../graphql/mutation";
 import {
   Modal,
   ModalOverlay,

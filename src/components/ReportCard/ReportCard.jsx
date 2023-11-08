@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@apollo/client";
-import { DELETE_REPORT } from "../../../../graphql/mutation";
+import { DELETE_REPORT } from "../../../graphql/mutation";
 import EditModal from "../EditModal/EditModal";
 
 export default function ReportCard({
@@ -28,6 +28,7 @@ export default function ReportCard({
   reportId,
 }) {
   let s = new Date(+createdAt);
+
   const viewmodal = useDisclosure();
   const editmodal = useDisclosure();
   const [deleteReport] = useMutation(DELETE_REPORT);
@@ -53,7 +54,7 @@ export default function ReportCard({
   return (
     <Box bg="dark" borderRadius="lg" boxShadow="md" p={4} borderWidth="1px">
       <Flex justify="space-between" align="center">
-        <Heading size="md">Report {index + 1}</Heading>
+        <Heading size="md">Report </Heading>
         <Flex>
           <Button
             size="sm"

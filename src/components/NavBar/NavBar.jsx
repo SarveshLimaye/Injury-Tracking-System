@@ -21,10 +21,10 @@ import { useRouter } from "next/navigation";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import { CgProfile } from "react-icons/cg";
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_USER } from "../../../../graphql/mutation";
-import { countUsersWithEmail } from "../../../../graphql/queries";
+import { ADD_USER } from "../../../graphql/mutation";
+import { countUsersWithEmail } from "../../../graphql/queries";
 import Avatar from "avataaars";
-import { generateRandomAvatarOptions } from "../../../utils/avatar";
+import { generateRandomAvatarOptions } from "../../utils/avatar";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { px } from "framer-motion";
 
