@@ -1,8 +1,3 @@
 {
-  "functions": {
-    "api/graphql": {
-      "handler": "src/pages/api/graphql.js",
-      "runtime": "nodejs14.x"
-    }
-  }
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
 }
