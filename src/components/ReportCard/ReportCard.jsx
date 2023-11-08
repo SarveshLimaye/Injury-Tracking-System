@@ -28,6 +28,7 @@ export default function ReportCard({
   reportId,
 }) {
   let s = new Date(+createdAt);
+
   const viewmodal = useDisclosure();
   const editmodal = useDisclosure();
   const [deleteReport] = useMutation(DELETE_REPORT);
@@ -53,7 +54,7 @@ export default function ReportCard({
   return (
     <Box bg="dark" borderRadius="lg" boxShadow="md" p={4} borderWidth="1px">
       <Flex justify="space-between" align="center">
-        <Heading size="md">Report {index + 1}</Heading>
+        <Heading size="md">Report </Heading>
         <Flex>
           <Button
             size="sm"
