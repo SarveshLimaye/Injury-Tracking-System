@@ -36,10 +36,14 @@ export default function View() {
     error: userError,
   } = useQuery(userMailtoId, {
     variables: { email: user?.email },
-    skip: !user,
+    skip: !user?.email,
   });
 
+  console.log(userLoading);
+  console.log(userError);
   const userId = userData?.userMailtoId;
+
+  console.log(userError);
 
   const {
     data: reportsData,
@@ -49,6 +53,8 @@ export default function View() {
     variables: { id: userId },
     skip: !userId,
   });
+
+  console.log(reportsData);
 
   useEffect(() => {
     if (userLoading || reportsLoading) {
@@ -139,6 +145,8 @@ export default function View() {
     // Update the reports with the sorted array
     setReports(sortedReports);
   };
+
+  console.log(reports);
 
   if (user === undefined) {
     return <AuthError />;
