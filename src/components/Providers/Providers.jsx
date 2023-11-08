@@ -23,9 +23,7 @@ export default function Providers({ children }) {
     <ApolloProvider client={client}>
       <CacheProvider>
         <ChakraProvider>
-          <UserProvider loginUrl="api/auth/login" profileUrl="api/auth/me">
-            {children}{" "}
-          </UserProvider>
+          <UserProvider loginUrl="api/auth/login">{children} </UserProvider>
         </ChakraProvider>
       </CacheProvider>
     </ApolloProvider>
