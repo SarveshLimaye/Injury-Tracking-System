@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { userMailtoId, User } from "../../../graphql/queries";
 import Loading from "../../components/Loading/Loading";
 import ReportCard from "../../components/ReportCard/ReportCard";
+import AuthError from "../../components/AuthError/AuthError";
 import {
   Box,
   Button,
@@ -139,76 +140,85 @@ export default function View() {
     setReports(sortedReports);
   };
 
-  return (
-    <>
-      <FormControl>
-        <Flex justifyContent="space-between" mx={3}>
-          <Input
-            type="datetime-local"
-            placeholder="Start Date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            mx={3}
-            my={2}
-          />
-          <Input
-            type="datetime-local"
-            placeholder="End Date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            mx={3}
-            my={2}
-          />
-          <Button onClick={filterReports} my={2} px={7} py={3}>
-            Filter
-          </Button>
-        </Flex>
-        <Flex justifyContent="space-between" mx={3}>
-          <Input
-            type="text"
-            placeholder="Search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            mx={3}
-            my={2}
-          />
-          <Button onClick={searchReportsWithQuery} my={2} px={7} py={3}>
-            Search
-          </Button>
-          <Select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            mx={3}
-            my={2}
-          >
-            <option value="createdAt">Sort by Date</option>
-            <option value="bodyPart">Sort by Body Part</option>
-            <option value="content">Sort by Content</option>
-          </Select>
-          <Button my={2} px={7} py={3} onClick={sortReports}>
-            Sort
-          </Button>
-        </Flex>
-      </FormControl>
+  if (user === undefined) {
+    return <AuthError />;
+  } else {
+    return (
+      <>
+        <FormControl>
+          <Flex justifyContent="space-between" mx={3}>
+            <Input
+              type="datetime-local"
+              placeholder="Start Date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              mx={3}
+              my={2}
+            />
+            <Input
+              type="datetime-local"
+              placeholder="End Date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              mx={3}
+              my={2}
+            />
+            <Button onClick={filterReports} my={2} px={7} py={3}>
+              Filter
+            </Button>
+          </Flex>
+          <Flex justifyContent="space-between" mx={3}>
+            <Input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              mx={3}
+              my={2}
+            />
+            <Button onClick={searchReportsWithQuery} my={2} px={7} py={3}>
+              Search
+            </Button>
+            <Select
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              mx={3}
+              my={2}
+            >
+              <option value="createdAt">Sort by Date</option>
+              <option value="bodyPart">Sort by Body Part</option>
+              <option value="content">Sort by Content</option>
+            </Select>
+            <Button my={2} px={7} py={3} onClick={sortReports}>
+              Sort
+            </Button>
+          </Flex>
+        </FormControl>
 
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <Grid templateColumns={`repeat(${columns}, 1fr)`} gap={4} p={4} mt={5}>
-          {reports?.map((report, index) => (
-            <GridItem key={report.id}>
-              <ReportCard
-                index={index}
-                reportId={report.id}
-                bodyPart={report.bodyPart}
-                content={report.content}
-                createdAt={report.createdAt}
-              />
-            </GridItem>
-          ))}
-        </Grid>
-      )}
-      {reports?.length === 0 ? <NoReports /> : null}
-    </>
-  );
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Grid
+            templateColumns={`repeat(${columns}, 1fr)`}
+            gap={4}
+            p={4}
+            mt={5}
+          >
+            {reports?.map((report, index) => (
+              <GridItem key={report.id}>
+                <ReportCard
+                  index={index}
+                  reportId={report.id}
+                  bodyPart={report.bodyPart}
+                  content={report.content}
+                  createdAt={report.createdAt}
+                />
+              </GridItem>
+            ))}
+          </Grid>
+        )}
+        {reports?.length === 0 ? <NoReports /> : null}
+      </>
+    );
+  }
 }

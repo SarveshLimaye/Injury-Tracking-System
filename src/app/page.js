@@ -5,6 +5,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_USER } from "../../graphql/mutation";
 import { countUsersWithEmail } from "../../graphql/queries";
+import Hero from "../components/Hero/Hero";
 
 import NavBar from "../components/NavBar/NavBar";
 
@@ -36,9 +37,5 @@ export default function Home() {
     }
   }, [user, data, addUserMutation]);
 
-  return (
-    <>
-      <h3> Home Page </h3>
-    </>
-  );
+  return <Hero />;
 }
