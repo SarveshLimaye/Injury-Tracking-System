@@ -7,7 +7,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 const client = new ApolloClient({
-  uri: "http://localhost:3000/api/graphql",
+  uri: "https://injury-tracking-system-gamma.vercel.app/api/graphql",
   cache: new InMemoryCache(),
 });
 
