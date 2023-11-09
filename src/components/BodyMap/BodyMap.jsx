@@ -6,7 +6,7 @@ import { Center, Button, Box } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_REPORT } from "../../../graphql/mutation";
 import { userMailtoId } from "../../../graphql/queries";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useSession } from "next-auth/react";
 
 const BodyContainer = ({ children }) => (
   <div
@@ -104,12 +104,12 @@ const BodyMap = () => {
   const [partNumbers, setPartNumbers] = useState({});
   const [selectedCount, setSelectedCount] = useState(0);
   const [injuryDetails, setInjuryDetails] = useState({});
-  const { user } = useUser();
+  const { data: session } = useSession();
   const { data, loading } = useQuery(userMailtoId, {
     variables: {
-      email: user?.email,
+      email: session?.user?.email,
     },
-    skip: !user,
+    skip: !session?.user?.email,
   });
   const [addReport, { error }] = useMutation(ADD_REPORT);
 

@@ -18,11 +18,11 @@ import {
   FormControl,
   Select, // Import Select component from Chakra UI
 } from "@chakra-ui/react";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useSession } from "next-auth/react";
 import NoReports from "../../components/NoReports/NoReports";
 
 export default function View() {
-  const { user } = useUser();
+  const { data: session } = useSession();
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [startDate, setStartDate] = useState(""); // State for the start date
@@ -35,8 +35,8 @@ export default function View() {
     loading: userLoading,
     error: userError,
   } = useQuery(userMailtoId, {
-    variables: { email: user?.email },
-    skip: !user?.email,
+    variables: { email: session?.user?.email },
+    skip: !session?.user?.email,
   });
 
   console.log(userLoading);
@@ -148,7 +148,7 @@ export default function View() {
 
   console.log(reports);
 
-  if (user === undefined) {
+  if (!session) {
     return <AuthError />;
   } else {
     return (

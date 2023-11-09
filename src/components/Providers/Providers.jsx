@@ -4,7 +4,7 @@ import { CacheProvider } from "@chakra-ui/next-js";
 
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { SessionProvider } from "next-auth/react";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/api/graphql",
@@ -23,7 +23,7 @@ export default function Providers({ children }) {
     <ApolloProvider client={client}>
       <CacheProvider>
         <ChakraProvider>
-          <UserProvider loginUrl="api/auth/login">{children} </UserProvider>
+          <SessionProvider>{children} </SessionProvider>
         </ChakraProvider>
       </CacheProvider>
     </ApolloProvider>
