@@ -11,6 +11,7 @@ import {
   Flex,
   Heading,
   Text,
+  FormLabel,
   Grid,
   GridItem,
   useBreakpointValue,
@@ -25,8 +26,8 @@ export default function View() {
   const { data: session } = useSession();
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [startDate, setStartDate] = useState(""); // State for the start date
-  const [endDate, setEndDate] = useState(""); // State for the end date
+  const [startDate, setStartDate] = useState("Add start date"); // State for the start date
+  const [endDate, setEndDate] = useState("Enter end date"); // State for the end date
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [sortOption, setSortOption] = useState("createdAt"); // State for sorting option
 
@@ -155,6 +156,7 @@ export default function View() {
       <>
         <FormControl>
           <Flex justifyContent="space-between" mx={3}>
+            <FormLabel mx={2}>Start Date</FormLabel>
             <Input
               type="datetime-local"
               placeholder="Start Date"
@@ -163,6 +165,7 @@ export default function View() {
               mx={3}
               my={2}
             />
+            <FormLabel mx={2}>End Date</FormLabel>
             <Input
               type="datetime-local"
               placeholder="End Date"
