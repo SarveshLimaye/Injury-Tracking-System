@@ -7,7 +7,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { SessionProvider } from "next-auth/react";
 
 const client = new ApolloClient({
-  uri: "http://localhost:3000/api/graphql",
+  uri: "https://earnest-paletas-cd3b94.netlify.app/api/graphql",
   cache: new InMemoryCache(),
 });
 
