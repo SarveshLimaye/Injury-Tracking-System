@@ -6,36 +6,36 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ADD_USER } from "../../graphql/mutation";
 import { countUsersWithEmail } from "../../graphql/queries";
 import Hero from "../components/Hero/Hero";
-
+import { useSession } from "next-auth/react";
 import NavBar from "../components/NavBar/NavBar";
 
 export default function Home() {
-  const { user, isLoading } = useUser();
+  const { data: session } = useSession();
 
   const { data, loading, error } = useQuery(countUsersWithEmail, {
     variables: {
-      email: user?.email,
+      email: session?.user?.email,
     },
-    skip: !user, // Skip the query if the user is not authenticated
+    skip: !session, // Skip the query if the user is not authenticated
   });
 
   const [addUserMutation, { error: addUserError }] = useMutation(ADD_USER);
 
   useEffect(() => {
-    if (user) {
+    if (session) {
       // Check if the user exists in the database based on the email
       if (data && data.countUsersWithEmail === 0) {
         console.log("User does not exist in database");
         // If the user doesn't exist, add them to the database
         addUserMutation({
           variables: {
-            name: user.name,
-            email: user.email,
+            name: session.user.name,
+            email: session.user.email,
           },
         });
       }
     }
-  }, [user, data, addUserMutation]);
+  }, [session, data, addUserMutation]);
 
   return <Hero />;
 }

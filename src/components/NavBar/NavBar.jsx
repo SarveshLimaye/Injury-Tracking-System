@@ -25,15 +25,13 @@ import { ADD_USER } from "../../../graphql/mutation";
 import { countUsersWithEmail } from "../../../graphql/queries";
 import Avatar from "avataaars";
 import { generateRandomAvatarOptions } from "../../utils/avatar";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { px } from "framer-motion";
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, isLoading } = useUser();
+  const { data: session } = useSession();
   const router = useRouter();
-
-  console.log(user);
 
   return (
     <Box bg={useColorModeValue("white", "gray.800")} px={10}>
@@ -63,7 +61,7 @@ export default function Navbar() {
               display={{ base: "none", md: "flex" }}
               marginRight={4}
             >
-              {user === undefined ? null : (
+              {!session ? null : (
                 <Link href="/add">
                   <Button w="full" variant="ghost">
                     Add Report
@@ -77,7 +75,7 @@ export default function Navbar() {
               display={{ base: "none", md: "flex" }}
               marginRight={4}
             >
-              {user === undefined ? null : (
+              {!session ? null : (
                 <Link href="/view">
                   <Button w="full" variant="ghost">
                     View Reports
@@ -87,7 +85,7 @@ export default function Navbar() {
             </HStack>
           </div>
 
-          {user == null ? (
+          {!session ? (
             <Button
               display="flex"
               flexDir="row"
@@ -96,7 +94,7 @@ export default function Navbar() {
               size={"sm"}
               mr={4}
               leftIcon={<Icon as={CgProfile} boxSize={6} />}
-              onClick={() => router.push("/api/auth/login")}
+              onClick={() => signIn()}
             >
               Sign In
             </Button>
@@ -120,15 +118,13 @@ export default function Navbar() {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Welcome, {user.name}</MenuItem>
+                <MenuItem>Welcome, {session.user.name}</MenuItem>
                 <MenuDivider />
                 <MenuItem as={Link} to="/profile">
                   Profile
                 </MenuItem>
                 <MenuDivider />
-                <MenuItem onClick={() => router.push("/api/auth/logout")}>
-                  Sign Out
-                </MenuItem>
+                <MenuItem onClick={() => signOut()}>Sign Out</MenuItem>
               </MenuList>
             </Menu>
           )}
